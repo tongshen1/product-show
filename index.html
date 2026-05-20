@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>桐燊 · 九同龙品牌 | 精密橡胶科技</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; }
+        body { background: #f8f9fa; color: #222; line-height: 1.5; }
+        .progress-container { position: fixed; top: 0; left: 0; width: 100%; height: 4px; background: transparent; z-index: 1000; }
+        .progress-bar { height: 4px; background: linear-gradient(90deg, #e31e24, #ff6b6b); width: 0%; transition: width 0.1s; box-shadow: 0 0 10px rgba(227,30,36,0.5); }
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 20px; }
+        .content-with-side { display: flex; align-items: flex-start; gap: 20px; position: relative; }
+        .main-content-area { flex: 1; min-width: 0; }
+        .pages-container { position: relative; width: 100%; }
+        .page-content { display: none; opacity: 0; animation: fadeIn 0.25s ease forwards; }
+        .page-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .sticky-contact-side { position: sticky; top: 120px; width: 75px; margin-left: 15px; z-index: 50; background: white; border-radius: 50px 8px 50px 8px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border: 1px solid #f0f0f0; padding: 20px 8px; text-align: center; }
+        .sticky-contact-side a { display: block; color: #1e293b; text-decoration: none; margin: 18px 0; font-size: 24px; position: relative; transition: 0.2s; }
+        .sticky-contact-side a:hover { color: #e31e24; transform: scale(1.1); }
+        .sticky-contact-side a span { display: none; position: absolute; right: 85px; top: 50%; transform: translateY(-50%); background: #1a1e2b; color: white; padding: 8px 18px; border-radius: 30px; font-size: 14px; white-space: nowrap; box-shadow: 0 6px 16px rgba(0,0,0,0.2); font-weight: 500; }
+        .sticky-contact-side a:hover span { display: block; }
+        .sticky-contact-side .contact-label { display: block; font-size: 11px; margin-top: 2px; color: #888; }
+        .sticky-contact-side .divider { height: 1px; background: linear-gradient(90deg, transparent, #ddd, transparent); margin: 15px 0; }
+        .fullscreen-swiper { width: 100%; height: 480px; margin: 0; position: relative; background: #0b1120; }
+        .swiper-slide { background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; }
+        .slide-content { max-width: 1300px; width: 100%; padding: 20px 60px; color: white; text-shadow: 2px 2px 15px rgba(0,0,0,0.5); position: relative; z-index: 2; }
+        .slide-mask { position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to top, rgba(0,0,0,0.6), transparent); z-index: 1; pointer-events: none; }
+        .slide-content h2 { font-size: 56px; font-weight: 800; margin-bottom: 20px; }
+        .slide-content p { font-size: 24px; max-width: 700px; background: rgba(0,0,0,0.3); display: inline-block; padding: 10px 30px; border-radius: 50px; backdrop-filter: blur(8px); }
+        .swiper-pagination-bullet { background: white !important; opacity: 0.7; }
+        .swiper-pagination-bullet-active { background: #e31e24 !important; opacity: 1; }
+        .swiper-button-next, .swiper-button-prev { color: white !important; background: rgba(0,0,0,0.2); width: 55px; height: 55px; border-radius: 50%; backdrop-filter: blur(5px); }
+        .swiper-button-next:hover, .swiper-button-prev:hover { background: #e31e24; }
+        .top-bar { background: #0f131c; color: #ccc; font-size: 13px; padding: 6px 0; }
+        .top-bar .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .top-links a { color: #ddd; text-decoration: none; margin-left: 20px; transition: color 0.2s; }
+        .top-links a:hover { color: #e31e24; }
+        .top-links i { margin-right: 4px; }
+        .main-header { background: #fff; padding: 15px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.03); border-bottom: 3px solid #e31e24; }
+        .header-flex { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+        .logo-area { display: flex; align-items: center; }
+        .brand-logo { display: flex; align-items: baseline; gap: 5px; }
+        .brand-main { font-size: 28px; font-weight: 800; color: #fff; background: #1a1e2b; padding: 8px 20px; border-radius: 12px 4px 12px 4px; letter-spacing: 2px; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .brand-sub { font-size: 12px; color: #888; font-weight: 400; margin-left: 5px; }
+        .hotline-search { display: flex; align-items: center; gap: 25px; }
+        .hotline { display: flex; align-items: center; background: #f0f2f5; padding: 8px 18px; border-radius: 40px; }
+        .hotline i { font-size: 26px; color: #e31e24; margin-right: 12px; }
+        .hotline .number { font-size: 26px; font-weight: 700; color: #1a1e2b; }
+        .hotline .label { font-size: 13px; color: #666; margin-left: 8px; }
+        /* 微信二维码容器（替代搜索框） */
+        .header-qrcode { display: flex; align-items: center; gap: 10px; }
+        .header-qrcode img { width: 80px; height: 80px; border-radius: 12px; border: 2px solid #e31e24; object-fit: cover; }
+        .header-qrcode .qrcode-text { font-size: 12px; color: #888; text-align: center; }
+        .nav-bar { background: #0f131c; border-bottom: 2px solid #e31e24; position: sticky; top: 0; z-index: 999; }
+        .nav-links { display: flex; list-style: none; flex-wrap: wrap; }
+        .nav-links li { position: relative; }
+        .nav-links li a { display: inline-block; padding: 16px 24px; color: #eee; text-decoration: none; font-weight: 500; font-size: 16px; transition: 0.2s; position: relative; overflow: hidden; cursor: pointer; }
+        .nav-links li a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 3px; background: #e31e24; transition: width 0.3s ease; }
+        .nav-links li a:hover::after { width: 100%; }
+        .nav-links li a:hover { background: rgba(227, 30, 36, 0.1); color: white; }
+        .nav-links li a.active { color: white; background: rgba(227, 30, 36, 0.15); }
+        .nav-links li a.active::after { width: 100%; }
+        .nav-links li a i { margin-right: 6px; }
+        .dropdown { position: relative; }
+        .dropdown-menu { position: absolute; top: 100%; left: 0; background: #1a1e2b; min-width: 180px; border-radius: 0 0 12px 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); opacity: 0; visibility: hidden; transform: translateY(-10px); transition: 0.2s; z-index: 100; border-top: 3px solid #e31e24; }
+        .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown-menu a { display: block; padding: 12px 20px; color: #ddd; border-bottom: none !important; font-size: 14px; cursor: pointer; }
+        .dropdown-menu a:hover { background: #e31e24; color: white; }
+        .keyword-bar { background: #fff; border-bottom: 1px solid #e9ecef; padding: 12px 0; }
+        .keyword-bar .container { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 20px; }
+        .keyword-label { font-weight: 600; color: #e31e24; font-size: 15px; }
+        .keywords { display: flex; flex-wrap: wrap; gap: 15px 25px; }
+        .keywords a { color: #444; text-decoration: none; font-size: 14px; }
+        .keywords a:hover { color: #e31e24; text-decoration: underline; }
+        .section-title { font-size: 32px; font-weight: 700; margin-bottom: 10px; padding-bottom: 15px; position: relative; }
+        .section-title:after { content: ''; position: absolute; bottom: 0; left: 0; width: 80px; height: 4px; background: #e31e24; border-radius: 2px; }
+        .section-sub { color: #666; margin-bottom: 40px; font-size: 16px; }
+        .btn { display: inline-block; background: #e31e24; color: white; padding: 10px 24px; border-radius: 30px; text-decoration: none; font-weight: 600; border: none; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 8px rgba(227,30,36,0.2); font-size: 14px; }
+        .btn-outline { background: transparent; border: 2px solid #e31e24; color: #e31e24; box-shadow: none; }
+        .btn-outline:hover { background: #e31e24; color: white; }
+        .btn:hover { background: #b8141a; transform: translateY(-2px); }
+        .advantages-wrapper { background: #f4f6f9; border-radius: 30px; padding: 40px 30px; margin: 40px 0; }
+        .advantages-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
+        .advantage-card { background: white; padding: 30px 20px; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.04); text-align: center; transition: 0.3s; border: 1px solid #eaeef2; }
+        .advantage-card:hover { transform: translateY(-6px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
+        .adv-icon { font-size: 44px; color: #1a2e4b; margin-bottom: 20px; background: #eef3f9; width: 80px; height: 80px; line-height: 80px; text-align: center; border-radius: 50%; margin-left: auto; margin-right: auto; }
+        .advantage-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+        .advantage-card p { color: #555; margin-bottom: 24px; font-size: 14px; line-height: 1.6; }
+        .product-showcase-single { 
+            background: linear-gradient(135deg, #fafbfd 0%, #eef2f7 100%);
+            border-radius: 30px; 
+            padding: 50px 40px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.03);
+            margin: 30px 0;
+            text-align: center;
+            border: 1px solid #e9ecef;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .product-showcase-single:hover { transform: translateY(-5px); box-shadow: 0 25px 45px rgba(0,0,0,0.06); }
+        .single-category-icon { font-size: 72px; color: #e31e24; margin-bottom: 25px; display: block; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .single-category-title { font-size: 36px; font-weight: 800; color: #1a1e2b; margin-bottom: 15px; }
+        .single-category-desc { font-size: 17px; color: #555; max-width: 600px; margin: 0 auto 30px; line-height: 1.7; }
+        .single-category-btn { background: #e31e24; color: white; padding: 14px 40px; border-radius: 50px; text-decoration: none; font-weight: 700; font-size: 16px; display: inline-block; box-shadow: 0 8px 20px rgba(227,30,36,0.25); transition: all 0.3s; border: none; cursor: pointer; }
+        .single-category-btn:hover { background: #b8141a; transform: translateY(-3px); box-shadow: 0 12px 25px rgba(227,30,36,0.35); }
+        .single-category-stats { display: flex; justify-content: center; gap: 60px; margin: 40px 0 25px; }
+        .single-stat { text-align: center; }
+        .single-stat i { font-size: 32px; color: #e31e24; margin-bottom: 10px; }
+        .single-stat .stat-value { font-size: 28px; font-weight: 700; color: #1a1e2b; }
+        .single-stat .stat-label { font-size: 14px; color: #666; margin-top: 5px; }
+        .product-detail-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; margin-top: 30px; }
+        .product-item { background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.04); transition: 0.3s; border: 1px solid #eee; text-align: center; padding-bottom: 20px; }
+        .product-item:hover { transform: translateY(-6px); box-shadow: 0 15px 30px rgba(0,0,0,0.08); }
+        .product-img { width: 100%; height: 200px; background: #eef2f6; display: flex; align-items: center; justify-content: center; color: #888; font-size: 14px; }
+        .product-img img { width: 100%; height: 100%; object-fit: cover; }
+        .product-item h4 { font-size: 18px; margin: 16px 0 8px; padding: 0 10px; }
+        .product-item .factory-info { font-size: 13px; color: #666; margin: 0 10px 12px; line-height: 1.5; }
+        .product-item .btn { margin-bottom: 5px; }
+        .about-section { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; background: white; border-radius: 24px; padding: 40px; margin: 50px 0; }
+        .about-stats { display: flex; gap: 20px; margin-top: 25px; }
+        .stat-item { text-align: center; }
+        .stat-num { font-size: 36px; font-weight: 800; color: #e31e24; }
+        .honor-badges { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
+        .badge { background: #f0f2f5; padding: 8px 18px; border-radius: 40px; font-weight: 500; }
+        .news-section { margin: 50px 0; }
+        .news-tabs { display: flex; gap: 5px; margin-bottom: 25px; border-bottom: 2px solid #e9ecef; }
+        .news-tab { padding: 12px 28px; font-weight: 600; color: #666; cursor: pointer; border-radius: 30px 30px 0 0; transition: 0.2s; background: transparent; border: none; font-size: 16px; }
+        .news-tab.active { background: #e31e24; color: white; }
+        .news-tab:hover:not(.active) { color: #e31e24; background: #f0f2f5; }
+        .news-panels { position: relative; }
+        .news-panel { display: none; }
+        .news-panel.active { display: block; }
+        .news-card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+        .news-item-card { background: white; border-radius: 20px; padding: 25px; box-shadow: 0 8px 20px rgba(0,0,0,0.03); border: 1px solid #f0f0f0; transition: 0.3s; }
+        .news-item-card:hover { transform: translateY(-8px); box-shadow: 0 20px 30px rgba(0,0,0,0.06); border-color: #e31e24; }
+        .news-item-card h4 { font-size: 18px; margin-bottom: 12px; }
+        .news-item-card .date { color: #999; font-size: 13px; margin-top: 15px; }
+        .footer { background: #000000; color: #ccc; padding: 60px 0 30px; margin-top: 60px; width: 100%; position: relative; left: 0; right: 0; }
+        .footer-brand { font-size: 32px; font-weight: 800; color: white; margin-bottom: 15px; }
+        .footer-brand span { color: #e31e24; }
+        .footer-grid-new { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.5fr; gap: 40px; }
+        .footer-links h4, .footer-contact h4 { color: white; margin-bottom: 24px; font-size: 18px; border-bottom: 2px solid #e31e24; display: inline-block; padding-bottom: 6px; }
+        .footer-links ul { list-style: none; }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { color: #aaa; text-decoration: none; transition: 0.2s; }
+        .footer-links a:hover { color: #e31e24; }
+        .footer-contact p { margin-bottom: 15px; display: flex; align-items: center; gap: 12px; }
+        .qrcode-box { background: #2d3345; width: 100px; height: 100px; display: flex; align-items: center; justify-content: center; border-radius: 16px; margin-top: 15px; }
+        .copyright { text-align: center; padding-top: 40px; margin-top: 40px; border-top: 1px solid #2f3545; background: #000; }
+        .go-top { position: fixed; bottom: 30px; right: 30px; background: #e31e24; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; z-index: 99; box-shadow: 0 8px 18px rgba(227,30,36,0.4); }
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 2000; display: flex; align-items: flex-end; justify-content: center; visibility: hidden; opacity: 0; transition: opacity 0.3s ease, visibility 0.3s; }
+        .modal-overlay.active { visibility: visible; opacity: 1; }
+        .modal-container { background: white; width: 100%; max-width: 520px; border-radius: 30px 30px 0 0; padding: 35px 30px; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1); box-shadow: 0 -10px 40px rgba(0,0,0,0.2); border-top: 5px solid #e31e24; }
+        .modal-overlay.active .modal-container { transform: translateY(0); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .modal-header h3 { font-size: 24px; font-weight: 700; color: #1a1e2b; }
+        .modal-header i { font-size: 28px; color: #999; cursor: pointer; transition: 0.2s; }
+        .modal-header i:hover { color: #e31e24; }
+        .form-group { margin-bottom: 20px; }
+        .form-group input, .form-group textarea { width: 100%; padding: 14px 18px; border: 2px solid #e0e4e8; border-radius: 16px; font-size: 15px; transition: 0.2s; background: #fafbfc; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #e31e24; background: white; }
+        .form-group textarea { min-height: 100px; resize: vertical; }
+        .modal-actions { display: flex; gap: 15px; margin-top: 25px; }
+        .modal-actions .btn { flex: 1; text-align: center; }
+        .btn-secondary { background: #f0f2f5; color: #444; box-shadow: none; }
+        .btn-secondary:hover { background: #ddd; color: #1a1e2b; }
+        .success-toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); background: #28a745; color: white; padding: 14px 30px; border-radius: 50px; font-weight: 500; z-index: 2100; display: none; box-shadow: 0 8px 20px rgba(40,167,69,0.3); }
+        #product-admin-panel { position: fixed; right: -420px; top: 0; width: 380px; height: 100vh; background: white; box-shadow: -2px 0 15px rgba(0,0,0,0.2); z-index: 2500; overflow-y: auto; padding: 20px; transition: right 0.3s ease; }
+        #product-admin-panel.show { right: 0; }
+        #product-admin-panel h3 { margin-bottom: 20px; }
+        #product-admin-panel input, #product-admin-panel select, #product-admin-panel textarea { width: 100%; padding: 8px; margin: 8px 0 15px 0; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; }
+        #product-admin-panel textarea { resize: vertical; }
+        .admin-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.3); z-index: 2400; display: none; }
+        .admin-overlay.show { display: block; }
+        .admin-trigger-btn { color: #e31e24; cursor: pointer; margin-left: 15px; font-size: 14px; user-select: none; }
+        .tab-btns { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { background: #f0f0f0; border: none; padding: 8px 15px; border-radius: 20px; cursor: pointer; }
+        .tab-btn.active { background: #e31e24; color: white; }
+        .batch-area { display: none; }
+        .batch-area.active { display: block; }
+        .pagination-controls { display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 30px; padding: 10px 0; }
+        .pagination-controls button { background: #e31e24; color: white; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; font-size: 14px; font-weight: 500; }
+        .pagination-controls button:disabled { background: #ccc; cursor: not-allowed; }
+        .pagination-controls span { font-weight: 600; color: #333; }
+        @media (max-width: 1000px) {
+            .advantages-grid { grid-template-columns: repeat(2,1fr); }
+            .footer-grid-new { grid-template-columns: 1fr 1fr; }
+            .news-card-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 700px) {
+            .brand-main { font-size: 22px; }
+            .fullscreen-swiper { height: 300px; }
+            .slide-content h2 { font-size: 32px; }
+            .single-category-stats { flex-direction: column; gap: 25px; }
+            .single-category-title { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="top-bar">
+        <div class="container">
+            <div>欢迎进入桐燊公司官方网站！</div>
+            <div class="top-links">
+                <a href="javascript:void(0)" data-page="about"><i class="far fa-user"></i>关于我们</a>
+                <a href="javascript:void(0)" data-page="contact"><i class="far fa-envelope"></i>联系我们</a>
+                <a href="https://s41.ax1x.com/2026/04/22/peRegVP.jpg" target="_blank"><i class="fab fa-qq"></i>QQ咨询</a>
+                <a href="https://s41.ax1x.com/2026/04/22/peReJD1.jpg" target="_blank"><i class="fab fa-weixin"></i>微信咨询</a>
+            </div>
+        </div>
+    </div>
+    <div class="main-header">
+        <div class="container header-flex">
+            <div class="logo-area"><div class="brand-logo"><span class="brand-main">桐燊</span><span class="brand-sub">九同龙品牌</span></div></div>
+            <div class="hotline-search">
+                <div class="hotline"><i class="fas fa-phone-alt"></i><span class="number">17717721911</span><span class="label">全国服务热线</span></div>
+                <!-- 原来的搜索框已删除，替换为微信二维码 -->
+                <div class="header-qrcode">
+                    <img src="https://i.ibb.co/99WRCnQC/e6bbf87c7b9dbc8bf874c7fc07c7c25c.jpg" alt="微信扫一扫">
+                    <div class="qrcode-text">微信<br>扫一扫</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="nav-bar">
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="javascript:void(0)" data-page="home" class="active"><i class="fas fa-home"></i>网站首页</a></li>
+                <li class="dropdown"><a href="javascript:void(0)" data-page="about"><i class="fas fa-building"></i>关于我们 <i class="fas fa-chevron-down" style="font-size:12px; margin-left:5px;"></i></a>
+                    <div class="dropdown-menu">
+                        <a href="javascript:void(0)" data-page="about">公司简介</a>
+                        <a href="javascript:void(0)" data-page="history">发展历程</a>
+                        <a href="javascript:void(0)" data-page="hr">人力资源</a>
+                        <a href="javascript:void(0)" data-page="culture">企业文化</a>
+                    </div>
+                </li>
+                <li><a href="javascript:void(0)" data-page="products-rubber"><i class="fas fa-cogs"></i>产品展示</a></li>
+                <li><a href="javascript:void(0)" data-page="brands"><i class="fas fa-medal"></i>合作品牌</a></li>
+                <li><a href="javascript:void(0)" data-page="story"><i class="fas fa-users"></i>品牌故事</a></li>
+                <li><a href="javascript:void(0)" data-page="contact"><i class="fas fa-phone"></i>联系我们</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="keyword-bar">
+        <div class="container">
+            <span class="keyword-label"><i class="fas fa-tags"></i> 热门搜索：</span>
+            <div class="keywords">
+                <a href="javascript:void(0)" data-page="products-rubber">橡胶减震与底盘附件</a>
+            </div>
+        </div>
+    </div>
+    <div class="fullscreen-swiper swiper" id="mainSwiper" style="height: 600px;">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide" style="background-image: url('https://s41.ax1x.com/2026/04/21/pegWOjU.jpg');"><div class="slide-content"><h2>九同龙 · 精密橡胶科技</h2><p>毫厘之间见真章 · 经得起千万次震颤</p></div><div class="slide-mask"></div></div>
+            <div class="swiper-slide" style="background-image: url('https://s41.ax1x.com/2026/04/21/pegWjuF.jpg');"><div class="slide-content"><h2>橡胶减震 · 底盘附件</h2><p>耐久可靠 · 保障车辆长期稳定运行</p></div><div class="slide-mask"></div></div>
+            <div class="swiper-slide" style="background-image: url('https://s41.ax1x.com/2026/04/21/peg49l6.jpg');"><div class="slide-content"><h2>OEM / ODM 定制专家</h2><p>从设计选型到售后维护 · 全程陪伴</p></div><div class="slide-mask"></div></div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+    <div class="container content-with-side" style="margin-top: 30px;">
+        <div class="main-content-area">
+            <div class="pages-container">
+                <!-- 首页 -->
+                <div id="page-home" class="page-content active">
+                    <div class="advantages-wrapper">
+                        <h2 class="section-title">我们的核心优势</h2>
+                        <p class="section-sub">为客户提供创新的产品和优质的服务</p>
+                        <div class="advantages-grid">
+                            <div class="advantage-card"><div class="adv-icon"><i class="fas fa-bolt"></i></div><h3>高效节能</h3><p>高效高精度的预成型机器，关键部件全进口</p><a href="javascript:void(0)" class="btn btn-outline trigger-message">立即咨询</a></div>
+                            <div class="advantage-card"><div class="adv-icon"><i class="fas fa-microchip"></i></div><h3>技术领先</h3><p>关键部件全部采用进口零件，独特生产工艺</p><a href="javascript:void(0)" class="btn btn-outline trigger-message">立即咨询</a></div>
+                            <div class="advantage-card"><div class="adv-icon"><i class="fas fa-clipboard-check"></i></div><h3>生产严格</h3><p>产品质量严格把关，层层检测，SGS认证</p><a href="javascript:void(0)" class="btn btn-outline trigger-message">立即咨询</a></div>
+                            <div class="advantage-card"><div class="adv-icon"><i class="fas fa-flask"></i></div><h3>原材料有保障</h3><p>德国进口粘合剂，橡胶原料品质稳定</p><a href="javascript:void(0)" class="btn btn-outline trigger-message">立即咨询</a></div>
+                        </div>
+                    </div>
+
+                    <div class="product-showcase-single">
+                        <i class="fas fa-car-crash single-category-icon"></i>
+                        <h2 class="single-category-title">橡胶减震 · 底盘附件</h2>
+                        <p class="single-category-desc">
+                            专注重卡底盘减震系统，涵盖发动机悬置、扭力胶芯、变速箱胶垫等全系产品。
+                            支持来图定制，工厂直供，为您的车辆提供持久可靠的平稳行驶体验。
+                        </p>
+                        <div class="single-category-stats">
+                            <div class="single-stat">
+                                <i class="fas fa-cube"></i>
+                                <div class="stat-value">20000+</div>
+                                <div class="stat-label">产品规格</div>
+                            </div>
+                            <div class="single-stat">
+                                <i class="fas fa-check-circle"></i>
+                                <div class="stat-value">SGS</div>
+                                <div class="stat-label">质量认证</div>
+                            </div>
+                            <div class="single-stat">
+                                <i class="fas fa-shipping-fast"></i>
+                                <div class="stat-value">3天</div>
+                                <div class="stat-label">急速打样</div>
+                            </div>
+                        </div>
+                        <a href="javascript:void(0)" data-page="products-rubber" class="single-category-btn">
+                            <i class="fas fa-arrow-right"></i> 查看橡胶减震系列
+                        </a>
+                    </div>
+
+                    <div class="news-section">
+                        <h2 class="section-title">桐燊·新闻资讯</h2>
+                        <div class="news-tabs">
+                            <button class="news-tab active" data-tab="faq">常见问答</button>
+                            <button class="news-tab" data-tab="company">公司新闻</button>
+                            <button class="news-tab" data-tab="industry">行业资讯</button>
+                        </div>
+                        <div class="news-panels">
+                            <div class="news-panel active" id="panel-faq"><div class="news-card-grid"><div class="news-item-card"><h4>翻转套损坏有什么表现？</h4><p>怠速车头抖得厉害、过坎驾驶室咚咚响、车头间隙大、行驶发飘。</p><div class="date"></div></div><div class="news-item-card"><h4>平衡杆胶套坏了有什么症状？</h4><p>走烂路咯吱异响、转弯车身晃、底盘松散、轻微跑偏。。</p><div class="date"></div></div><div class="news-item-card"><h4>支持非标定制？</h4><p>提供图纸即可定制。</p><div class="date"></div></div></div></div>
+                            <div class="news-panel" id="panel-company"><div class="news-card-grid"><div class="news-item-card"><h4>新智能车间投产</h4><p>产能提升40%。</p><div class="date"></div></div><div class="news-item-card"><h4>荣获优秀供应商</h4><p>重汽、陕汽表彰。</p><div class="date"></div></div><div class="news-item-card"><h4>十五年技术沉淀</h4><p>装车超百万台。</p><div class="date"></div></div></div></div>
+                            <div class="news-panel" id="panel-industry"><div class="news-card-grid"><div class="news-item-card"><h4>耐久·经得起震颤</h4><p>一个胶套的寿命就是尊严。</p><div class="date"></div></div><div class="news-item-card"><h4>精密·毫厘之间</h4><p>尺寸公差±0.05mm。</p><div class="date"></div></div><div class="news-item-card"><h4>信赖·长久相伴</h4><p>九同龙品牌理念。</p><div class="date"></div></div></div></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 橡胶减震分类详情页 -->
+                <div id="page-products-rubber" class="page-content"><div style="padding:20px 0;"><h2 class="section-title">橡胶减震 · 底盘附件</h2><div class="product-detail-grid"></div><div class="pagination-controls" id="pagination-rubber"></div></div></div>
+                <!-- 其他页面保持不变 -->
+                <div id="page-about" class="page-content">
+                    <div style="padding:40px 20px; background:white; border-radius:24px;">
+                        <h2>关于桐燊</h2><h4 style="margin-top:5px;">九同龙品牌</h4>
+                        <p style="line-height:1.8;">十五年沉淀，一朝龙吟。桐燊公司的故事始于 2005 年。那是一个深耕行业、积蓄力量的起点。作为公司的前身，我们在十几年的时光里专注于供应链的打磨、工艺的锤炼与市场的探索。我们不急于表达，而是将所有的精力都倾注在“内功”的修炼上，只为等待一个厚积薄发的契机。</p>
+                        <p style="line-height:1.8;">2020 年，厚积薄发，「九同龙」品牌应运而生。这一年，桐燊公司完成了从幕后积淀到台前绽放的关键一跃。「九同龙」品牌的诞生，不仅是一个商业符号的确立，更是我们十五年行业经验、匠心精神与严苛标准的集大成者。</p>
+                        <p style="line-height:1.8;">“九同”寓意着聚合多方优势、追求极致大同的境界；“龙”则象征着品质的尊贵与腾跃的姿态。九同龙品牌承载着桐燊公司自 2005 年以来对产品的敬畏之心，致力于为消费者带来经得起时间考验的精品。从 2005 到 2020，我们用十五年的脚踏实地，换来了「九同龙」的一鸣惊人。</p>
+                        <p style="line-height:1.8;">展望未来，桐燊公司将继续以「九同龙」品牌为核心载体，传承匠心，守正创新，与您共鉴时间淬炼下的非凡品质。</p>
+                        <div style="display:flex; gap:40px; margin-top:30px; flex-wrap:wrap;"><div><strong style="font-size:24px; color:#e31e24;">13+</strong><br>服务全国客户</div><div><strong style="font-size:24px; color:#e31e24;">20+</strong><br>出口国家</div><div><strong style="font-size:24px; color:#e31e24;">800万</strong><br>年产能</div></div>
+                        <div style="margin-top:30px;"><a href="javascript:void(0)" class="btn" data-page="hr" style="background:#e31e24; color:white; padding:10px 24px; border-radius:30px; text-decoration:none;"><i class="fas fa-users"></i> 人力资源（加入我们）</a></div>
+                    </div>
+                </div>
+                <div id="page-history" class="page-content"><div style="padding:40px 20px; background:white; border-radius:24px;"><h2>发展历程</h2><div class="timeline" style="position:relative; max-width:800px; margin:30px auto 0; padding-left:30px;"><div class="timeline-item" style="position:relative; margin-bottom:40px; display:flex; align-items:flex-start;"><div class="timeline-year" style="width:70px; font-size:20px; font-weight:600; color:#e31e24;">2005</div><div class="timeline-content" style="flex:1; padding-left:30px;"><h4 style="margin:0 0 8px; font-weight:600;">桐燊前身 · 初创起步</h4><p style="margin:0; color:#555;">公司前身成立，进入橡胶制品与工业密封件领域，开始搭建基础供应链，专注于工艺打磨与技术积累。</p></div></div><div class="timeline-item" style="position:relative; margin-bottom:40px; display:flex; align-items:flex-start;"><div class="timeline-year" style="width:70px; font-size:20px; font-weight:600; color:#e31e24;">2012</div><div class="timeline-content" style="flex:1; padding-left:30px;"><h4 style="margin:0 0 8px; font-weight:600;">工艺沉淀 · 产能提升</h4><p style="margin:0; color:#555;">逐步完善生产线，引入标准化管理流程，产品质量稳定性得到客户认可，初步建立长期合作客户群。</p></div></div><div class="timeline-item" style="position:relative; margin-bottom:40px; display:flex; align-items:flex-start;"><div class="timeline-year" style="width:70px; font-size:20px; font-weight:600; color:#e31e24;">2020</div><div class="timeline-content" style="flex:1; padding-left:30px;"><h4 style="margin:0 0 8px; font-weight:600;">「九同龙」品牌正式诞生</h4><p style="margin:0; color:#555;">整合十五年行业经验，推出自主品牌「九同龙」，从幕后生产走向品牌化运营，专注为市场提供可靠、耐用的橡胶零部件解决方案。</p></div></div><div class="timeline-item" style="position:relative; margin-bottom:40px; display:flex; align-items:flex-start;"><div class="timeline-year" style="width:70px; font-size:20px; font-weight:600; color:#e31e24;">2023</div><div class="timeline-content" style="flex:1; padding-left:30px;"><h4 style="margin:0 0 8px; font-weight:600;">市场拓展 · 服务升级</h4><p style="margin:0; color:#555;">服务客户覆盖全国 13+ 省市，产品出口 20+ 国家，年产能突破 800 万件，持续优化客户响应与技术支持体系。</p></div></div><div class="timeline-item" style="position:relative; margin-bottom:40px; display:flex; align-items:flex-start;"><div class="timeline-year" style="width:70px; font-size:20px; font-weight:600; color:#e31e24;">2025</div><div class="timeline-content" style="flex:1; padding-left:30px;"><h4 style="margin:0 0 8px; font-weight:600;">持续精进 · 行稳致远</h4><p style="margin:0; color:#555;">以「九同龙」品牌为核心，坚守品质底线，推动工艺微创新，致力于成为细分领域值得信赖的长期合作伙伴。</p></div></div><div style="position:absolute; left:10px; top:8px; bottom:8px; width:2px; background:#ccc; z-index:0;"></div></div></div></div>
+                <div id="page-hr" class="page-content"><div style="padding:40px 20px; background:white; border-radius:24px;"><h2>人才理念</h2><p style="margin:20px 0 30px; line-height:1.8;">桐燊/九同龙始终相信，好的产品源于好的人。我们不追求短期速成，而是愿意花时间培养真正热爱制造业的手艺人。在这里，经验被尊重，创新被鼓励，每一位员工都是品牌成长的共建者。</p><h3 style="margin:30px 0 15px;">我们看重什么</h3><div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:20px;"><div style="background:#fafafa; padding:20px; border-radius:12px; text-align:center;"><i class="fas fa-hands" style="font-size:28px; color:#e31e24; margin-bottom:12px;"></i><h4 style="margin-bottom:8px;">踏实</h4><p style="color:#666;">肯下笨功夫，把简单的事重复做好</p></div><div style="background:#fafafa; padding:20px; border-radius:12px; text-align:center;"><i class="fas fa-lightbulb" style="font-size:28px; color:#e31e24; margin-bottom:12px;"></i><h4 style="margin-bottom:8px;">好学</h4><p style="color:#666;">对工艺有好奇心，愿意持续精进</p></div><div style="background:#fafafa; padding:20px; border-radius:12px; text-align:center;"><i class="fas fa-users" style="font-size:28px; color:#e31e24; margin-bottom:12px;"></i><h4 style="margin-bottom:8px;">协作</h4><p style="color:#666;">老师傅带新人，团队共同解决问题</p></div></div><h3 style="margin:40px 0 15px;">成长在桐燊</h3><p style="line-height:1.8;">我们为员工提供清晰的技能晋升通道和稳定的工作环境。无论是一线技师还是技术研发，都能在这里找到长期发展的路径。我们定期组织内部技能交流，鼓励跨岗位学习，让每个人都能成为多面手。</p><p style="margin-top:30px; color:#888;"><i class="fas fa-envelope" style="margin-right:8px;"></i> 如有合作或交流意向，欢迎联系：tongshen_en@163.com</p></div></div>
+                <div id="page-culture" class="page-content"><div style="padding:40px 20px; background:white; border-radius:24px;"><h2>企业文化</h2><div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:25px; margin:30px 0;"><div style="background:#fafafa; padding:30px 20px; border-radius:16px; text-align:center;"><i class="fas fa-bullseye" style="font-size:36px; color:#e31e24; margin-bottom:20px;"></i><h3 style="margin-bottom:12px;">使命</h3><p>用可靠的产品与务实的态度，成为客户供应链中最放心的一环。</p></div><div style="background:#fafafa; padding:30px 20px; border-radius:16px; text-align:center;"><i class="fas fa-eye" style="font-size:36px; color:#e31e24; margin-bottom:20px;"></i><h3 style="margin-bottom:12px;">愿景</h3><p>在橡胶零部件细分领域，成为有口碑、有温度的长期品牌。</p></div><div style="background:#fafafa; padding:30px 20px; border-radius:16px; text-align:center;"><i class="fas fa-hand-holding-heart" style="font-size:36px; color:#e31e24; margin-bottom:20px;"></i><h3 style="margin-bottom:12px;">价值观</h3><p>务实 · 守正 · 精进 · 利他</p></div></div><h3 style="border-left:4px solid #e31e24; padding-left:20px; margin:40px 0 25px;">行事准则</h3><div style="display:flex; flex-direction:column; gap:20px;"><div style="display:flex; gap:20px;"><div style="min-width:70px; font-weight:700; color:#e31e24;">务实</div><div>不讲故事，品质是做出来的。</div></div><div style="display:flex; gap:20px;"><div style="min-width:70px; font-weight:700; color:#e31e24;">守正</div><div>遵守标准，对客户诚信，对员工负责。</div></div><div style="display:flex; gap:20px;"><div style="min-width:70px; font-weight:700; color:#e31e24;">精进</div><div>持续优化每个细节，不满足于“差不多”。</div></div><div style="display:flex; gap:20px;"><div style="min-width:70px; font-weight:700; color:#e31e24;">利他</div><div>先成就客户，再成就自己，共享成长价值。</div></div></div><h3 style="border-left:4px solid #e31e24; padding-left:20px; margin:40px 0 20px;">团队风貌</h3><p style="line-height:1.8;">一群“手比嘴快”的人，老师傅与年轻技术员并肩钻研，沉下心把手里的活儿干好。</p></div></div>
+                <div id="page-brands" class="page-content"><div style="padding:40px 20px; background:white; border-radius:24px;"><h2>合作品牌</h2><p>与福田、重汽、陕汽、解放、东风、三一等主机厂深度合作。</p></div></div>
+                <div id="page-story" class="page-content"><div style="padding:40px 20px; background:white; border-radius:24px;"><h2>品牌故事</h2><p>桐燊公司 九同龙品牌专注重型汽车配件的自主品牌。公司深耕重卡底盘件、精密橡胶制品多年，服务覆盖解放、重汽、陕汽、东风、欧曼等主流重卡车型。我们以严苛标准把控产品品质，从选材、生产到检测层层把关，力求每一件配件都稳定耐用、适配可靠。秉持诚信经营、品质为先的理念，桐燊公司以“九同龙”为载体，用心服务广大卡友与维修商户，致力于成为值得信赖的重卡配件伙伴，助力每一趟运输平安高效，龙行万里，一路畅通。</p></div></div>
+                <div id="page-contact" class="page-content"><div style="padding:40px 20px; background:white; border-radius:24px;"><h2>联系我们</h2><p>电话：17717721911<br>地址：河北省邢台市清河县工业区</p></div></div>
+            </div>
+        </div>
+        <div class="sticky-contact-side">
+            <a href="tel:17717721911"><i class="fas fa-phone-alt"></i><span>17717721911</span><div class="contact-label">电话</div></a>
+            <div class="divider"></div>
+            <a href="javascript:void(0)" id="messageTriggerSide"><i class="fas fa-comment-dots"></i><span>在线留言</span><div class="contact-label">留言</div></a>
+            <div class="divider"></div>
+            <a href="#"><i class="fab fa-weixin"></i><span>17717721911</span><div class="contact-label">微信</div></a>
+            <div class="divider"></div>
+            <a href="#"><i class="fab fa-qq"></i><span>3300570251</span><div class="contact-label">QQ</div></a>
+        </div>
+    </div>
+    <footer class="footer" style="background:#000000; width:100%; margin:0; padding:0; left:0; right:0; position:relative;">
+        <div style="max-width:100%; margin:0; padding:0 15px;">
+            <div class="footer-grid-new">
+                <div><div class="footer-brand">桐燊<span>·九同龙</span></div><p style="margin-bottom:20px;">精密橡胶科技 · 更耐用</p><p><i class="fas fa-map-marker-alt"></i> 河北省邢台市清河县工业区</p></div>
+                <div class="footer-links"><h4>快速导航</h4><ul><li><a href="javascript:void(0)" data-page="about">关于我们</a></li><li><a href="javascript:void(0)" data-page="products-rubber">产品中心</a></li><li><a href="javascript:void(0)" data-page="story">品牌故事</a></li><li><a href="javascript:void(0)" data-page="contact">联系我们</a></li></ul></div>
+                <div class="footer-links"><h4>产品系列</h4><ul><li><a href="javascript:void(0)" data-page="products-rubber">橡胶减震</a></li></ul></div>
+                <div class="footer-contact"><h4>联系我们</h4><p><i class="fas fa-phone"></i> 177-1772-1911</p><p><i class="fas fa-envelope"></i> tongshen_en@163.com</p>
+                    <!-- 微信二维码已替换为你提供的图片 -->
+                    <div class="qrcode-box"><img src="https://i.ibb.co/99WRCnQC/e6bbf87c7b9dbc8bf874c7fc07c7c25c.jpg" alt="微信扫一扫" style="width:100%; height:100%; object-fit:cover; border-radius:16px;"></div>
+                    <p style="margin-top:10px;">微信扫一扫</p>
+                    <p style="margin-top:0px;"><a href="javascript:void(0)" class="btn" id="footerMessageBtn" style="padding:8px 20px;"><i class="fas fa-pencil-alt"></i> 在线留言</a></p>
+                </div>
+            </div>
+            <!-- 添加宝贝按钮已屏蔽（删除） -->
+            <div class="copyright" style="background:#000; margin:0;">© 2026 桐燊公司 九同龙品牌 | 显著延长使用寿命</div>
+        </div>
+    </footer>
+    <div class="go-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-chevron-up"></i></div>
+    <div class="modal-overlay" id="messageModal"><div class="modal-container"><div class="modal-header"><h3><i class="fas fa-envelope-open-text" style="color:#e31e24; margin-right:10px;"></i>在线询价</h3><i class="fas fa-times" id="closeModalBtn"></i></div><form id="messageForm"><div class="form-group"><input type="text" name="name" placeholder="您的姓名 *" required></div><div class="form-group"><input type="tel" name="phone" placeholder="联系电话 *" required></div><div class="form-group"><input type="email" name="email" placeholder="电子邮箱"></div><div class="form-group"><textarea name="message" placeholder="请描述您的需求或疑问…" required></textarea></div><div class="modal-actions"><button type="button" class="btn btn-secondary" id="cancelModalBtn">取消</button><button type="submit" class="btn">提交询价</button></div></form></div></div>
+    <div class="success-toast" id="successToast"><i class="fas fa-check-circle"></i> 询价已发送至 tongshen_en@163.com，我们会尽快回复！</div>
+    <!-- 后台管理面板已保留在后台，前端不再显示入口 -->
+    <div class="admin-overlay" id="adminOverlay" onclick="closeProductAdmin()"></div>
+    <div id="product-admin-panel">
+        <h3>✨ 产品管理 <span style="float:right; cursor:pointer;" onclick="closeProductAdmin()">✕</span></h3>
+        <div class="tab-btns">
+            <button class="tab-btn active" onclick="switchAdminTab('single')">单个添加</button>
+            <button class="tab-btn" onclick="switchAdminTab('batch')">批量添加</button>
+        </div>
+        <div id="singleAdd" class="batch-area active">
+            <label>产品名称</label>
+            <input type="text" id="newProductName" placeholder="例如：新款减震器">
+            <label>产品分类</label>
+            <select id="newProductCategory">
+                <option value="rubber">橡胶减震与底盘附件</option>
+            </select>
+            <label>产品图片</label>
+            <input type="file" id="newProductImage" accept="image/*">
+            <button class="btn" onclick="addProduct()" style="width:100%; margin-top:15px;">上传并添加</button>
+        </div>
+        <div id="batchAdd" class="batch-area">
+            <label>批量选择图片 (可多选)</label>
+            <input type="file" id="batchImages" accept="image/*" multiple>
+            <label>对应产品名称 (每行一个，按顺序匹配图片)</label>
+            <textarea id="batchNames" rows="5" placeholder="发动机悬置减震垫&#10;扭力胶芯&#10;变速箱胶垫"></textarea>
+            <label>统一分类</label>
+            <select id="batchCategory">
+                <option value="rubber">橡胶减震与底盘附件</option>
+            </select>
+            <button class="btn" onclick="batchAddProducts()" style="width:100%; margin-top:15px;">批量上传并添加</button>
+        </div>
+        <hr style="margin:20px 0;">
+        <p style="font-size:12px; color:#888;">图片保存到 imgbb，产品列表自动同步到云端，换设备也能看到。</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        // ===================== 你的配置 =====================
+        const BLOB_ID = '019e4066-6828-7f8a-9d04-ede3c0965572';
+        const IMGBB_API_KEY = '044a8ab9957f3bd4709b72a4c557b774';
+        const TARGET_EMAIL = 'tongshen_en@163.com';
+        const PRODUCTS_PER_PAGE = 16;
+        // =================================================================
+
+        const API_URL = `https://jsonblob.com/api/jsonBlob/${BLOB_ID}`;
+
+        // 云端操作：获取产品列表
+        async function loadProducts() {
+            try {
+                const res = await fetch(API_URL);
+                if (!res.ok) throw new Error('读取失败');
+                const data = await res.json();
+                return Array.isArray(data) ? data : [];
+            } catch (e) {
+                console.warn('加载云端数据失败，使用本地缓存', e);
+                try {
+                    return JSON.parse(localStorage.getItem('tongchen_products') || '[]');
+                } catch {
+                    return [];
+                }
+            }
+        }
+
+        // 云端操作：保存产品列表
+        async function saveProducts(prods) {
+            localStorage.setItem('tongchen_products', JSON.stringify(prods));
+            try {
+                const res = await fetch(API_URL, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(prods)
+                });
+                if (!res.ok) throw new Error('保存失败');
+                console.log('✅ 产品数据已同步到云端');
+            } catch (e) {
+                console.error('❌ 云端保存失败，仅存本地', e);
+                alert('云端保存失败，请检查网络。数据已暂存本机。');
+            }
+        }
+
+        // 图片上传到 imgbb
+        async function uploadImage(file) {
+            const formData = new FormData();
+            formData.append('image', file);
+            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+                method: 'POST',
+                body: formData
+            });
+            const data = await res.json();
+            if (!data.success) throw new Error(data.error?.message || '上传失败');
+            return data.data.url;
+        }
+
+        // ========== 产品渲染 ==========
+        const categoryPageMap = {};
+        function renderAllProducts(products) {
+            document.querySelectorAll('.product-detail-grid').forEach(grid => grid.innerHTML = '');
+            const grouped = {};
+            products.forEach(prod => {
+                if (!grouped[prod.category]) grouped[prod.category] = [];
+                grouped[prod.category].push(prod);
+            });
+            const cats = ['rubber'];
+            cats.forEach(cat => {
+                const grid = document.querySelector(`#page-products-${cat} .product-detail-grid`);
+                const paginationDiv = document.getElementById(`pagination-${cat}`);
+                if (!grid) return;
+                const catProducts = grouped[cat] || [];
+                const totalPages = Math.ceil(catProducts.length / PRODUCTS_PER_PAGE);
+                let currentPage = categoryPageMap[cat] || 1;
+                if (currentPage > totalPages) currentPage = totalPages || 1;
+                categoryPageMap[cat] = currentPage;
+                const start = (currentPage - 1) * PRODUCTS_PER_PAGE;
+                const pageProducts = catProducts.slice(start, start + PRODUCTS_PER_PAGE);
+
+                pageProducts.forEach(prod => {
+                    const item = document.createElement('div');
+                    item.className = 'product-item';
+                    item.innerHTML = `
+                        <div class="product-img"><img src="${prod.image}" alt="${prod.name}"></div>
+                        <h4>${prod.name}</h4>
+                        <p class="factory-info">工厂直供 · 来图开模 · 量大从优</p>
+                        <a href="javascript:void(0)" class="btn trigger-message">在线询价</a>
+                    `;
+                    grid.appendChild(item);
+                });
+                grid.querySelectorAll('.trigger-message').forEach(btn => {
+                    btn.addEventListener('click', (e) => { e.preventDefault(); openMessageModal(); });
+                });
+                if (paginationDiv) {
+                    paginationDiv.innerHTML = '';
+                    if (totalPages > 1) {
+                        const prevBtn = document.createElement('button');
+                        prevBtn.textContent = '上一页';
+                        prevBtn.disabled = currentPage === 1;
+                        prevBtn.onclick = () => { categoryPageMap[cat] = currentPage - 1; renderAllProducts(products); };
+                        const nextBtn = document.createElement('button');
+                        nextBtn.textContent = '下一页';
+                        nextBtn.disabled = currentPage === totalPages;
+                        nextBtn.onclick = () => { categoryPageMap[cat] = currentPage + 1; renderAllProducts(products); };
+                        const span = document.createElement('span');
+                        span.textContent = `第 ${currentPage} 页 / 共 ${totalPages} 页`;
+                        paginationDiv.appendChild(prevBtn);
+                        paginationDiv.appendChild(span);
+                        paginationDiv.appendChild(nextBtn);
+                    }
+                }
+            });
+        }
+
+        // 添加单个产品
+        async function addProduct() {
+            const name = document.getElementById('newProductName').value.trim();
+            const category = document.getElementById('newProductCategory').value;
+            const file = document.getElementById('newProductImage').files[0];
+            if (!name || !file) return alert('请填写名称并选择图片');
+            const btn = event.target;
+            btn.textContent = '上传中...'; btn.disabled = true;
+            try {
+                const url = await uploadImage(file);
+                const products = await loadProducts();
+                products.push({ name, category, image: url });
+                await saveProducts(products);
+                renderAllProducts(products);
+                alert('添加成功！');
+                document.getElementById('newProductName').value = '';
+                document.getElementById('newProductImage').value = '';
+                closeProductAdmin();
+            } catch (e) { alert('错误：' + e.message); }
+            btn.textContent = '上传并添加'; btn.disabled = false;
+        }
+
+        // 批量添加产品
+        async function batchAddProducts() {
+            const files = document.getElementById('batchImages').files;
+            const namesText = document.getElementById('batchNames').value.trim();
+            const category = document.getElementById('batchCategory').value;
+            if (!files.length || !namesText) return alert('请选择图片并填写名称列表');
+            const names = namesText.split('\n').map(s => s.trim()).filter(s => s);
+            if (names.length < files.length) {
+                if (!confirm(`名称数量(${names.length})少于图片数量(${files.length})，多余图片将使用"未命名产品"，是否继续？`)) return;
+                while (names.length < files.length) names.push('未命名产品');
+            }
+            const btn = event.target;
+            btn.textContent = '批量上传中...'; btn.disabled = true;
+            let successCount = 0;
+            const products = await loadProducts();
+            for (let i = 0; i < files.length; i++) {
+                try {
+                    const url = await uploadImage(files[i]);
+                    products.push({ name: names[i] || '未命名产品', category, image: url });
+                    successCount++;
+                } catch (e) { console.error(`第${i+1}张上传失败`, e); }
+            }
+            await saveProducts(products);
+            renderAllProducts(products);
+            alert(`批量添加完成：成功 ${successCount} / ${files.length} 个产品`);
+            document.getElementById('batchImages').value = '';
+            document.getElementById('batchNames').value = '';
+            btn.textContent = '批量上传并添加'; btn.disabled = false;
+            closeProductAdmin();
+        }
+
+        // 页面切换
+        (function() {
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('progressBar').style.width = scrolled + '%';
+            });
+            const swiper = new Swiper('.fullscreen-swiper', {
+                loop: true, autoplay: { delay: 4000 }, effect: 'fade', fadeEffect: { crossFade: true },
+                pagination: { el: '.swiper-pagination', clickable: true },
+                navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
+            });
+            const pages = document.querySelectorAll('.page-content');
+            const swiperEl = document.getElementById('mainSwiper');
+            window.switchPage = async function(pageId) {
+                pages.forEach(p => p.classList.remove('active'));
+                const target = document.getElementById('page-' + pageId) || document.getElementById('page-home');
+                if (target) target.classList.add('active');
+                document.querySelectorAll('.nav-links li > a').forEach(link => {
+                    link.classList.remove('active');
+                    const linkPage = link.dataset.page;
+                    if (linkPage === pageId || (['about','history','hr','culture'].includes(pageId) && linkPage === 'about')) {
+                        link.classList.add('active');
+                    }
+                });
+                swiperEl.style.display = (pageId === 'home') ? 'block' : 'none';
+                if (pageId === 'home') { swiper.autoplay.start(); swiper.update(); } else { swiper.autoplay.stop(); }
+                if (pageId === 'products-rubber') {
+                    const products = await loadProducts();
+                    renderAllProducts(products);
+                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            };
+            document.body.addEventListener('click', (e) => {
+                const trigger = e.target.closest('[data-page]');
+                if (trigger) { e.preventDefault(); switchPage(trigger.dataset.page); }
+            });
+            document.querySelectorAll('.news-tab').forEach(tab => tab.addEventListener('click', () => {
+                const target = tab.dataset.tab;
+                document.querySelectorAll('.news-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.news-panel').forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById('panel-' + target).classList.add('active');
+            }));
+        })();
+
+        // 留言功能
+        const modal = document.getElementById('messageModal');
+        const closeBtn = document.getElementById('closeModalBtn');
+        const cancelBtn = document.getElementById('cancelModalBtn');
+        const form = document.getElementById('messageForm');
+        const toast = document.getElementById('successToast');
+        function openMessageModal() { modal.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeMessageModal() { modal.classList.remove('active'); document.body.style.overflow = ''; }
+        window.openMessageModal = openMessageModal;
+        document.querySelectorAll('.trigger-message, #messageTriggerSide, #footerMessageBtn').forEach(btn => {
+            btn.addEventListener('click', (e) => { e.preventDefault(); openMessageModal(); });
+        });
+        closeBtn.addEventListener('click', closeMessageModal);
+        cancelBtn.addEventListener('click', closeMessageModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeMessageModal(); });
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            try {
+                const mailForm = new FormData();
+                mailForm.append('name', formData.get('name'));
+                mailForm.append('phone', formData.get('phone'));
+                mailForm.append('email', formData.get('email') || '未填写');
+                mailForm.append('message', formData.get('message'));
+                const response = await fetch(`https://mailthis.to/${TARGET_EMAIL}`, {
+                    method: 'POST', body: mailForm, headers: { 'Accept': 'application/json' }
+                });
+                if (response.ok) {
+                    toast.style.display = 'block';
+                    setTimeout(() => toast.style.display = 'none', 4000);
+                    form.reset();
+                    closeMessageModal();
+                } else {
+                    alert('发送失败，请稍后重试或直接拨打电话。');
+                }
+            } catch (err) { alert('网络错误，请稍后重试。'); }
+        });
+
+        // 后台管理面板（仍可通过控制台调用 openProductAdmin() 打开）
+        function openProductAdmin() {
+            document.getElementById('product-admin-panel').classList.add('show');
+            document.getElementById('adminOverlay').classList.add('show');
+        }
+        function closeProductAdmin() {
+            document.getElementById('product-admin-panel').classList.remove('show');
+            document.getElementById('adminOverlay').classList.remove('show');
+        }
+        function switchAdminTab(tab) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.batch-area').forEach(a => a.classList.remove('active'));
+            document.querySelector(`.tab-btn[onclick="switchAdminTab('${tab}')"]`).classList.add('active');
+            document.getElementById(tab === 'single' ? 'singleAdd' : 'batchAdd').classList.add('active');
+        }
+
+        // 初始化：页面加载时从云端拉取产品并渲染
+        window.addEventListener('DOMContentLoaded', async () => {
+            const products = await loadProducts();
+            renderAllProducts(products);
+        });
+    </script>
+</body>
+</html>
